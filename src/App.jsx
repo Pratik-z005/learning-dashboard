@@ -4,7 +4,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <div>
+        <h1>Learning DashBoard</h1>
+        <p>Track . Learn . Improve</p>
+      </div>
+    </>
+  );
 }
 
 export default App;
