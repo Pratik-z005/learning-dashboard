@@ -6,7 +6,11 @@ import TodayLearning from "../components/TodayLearning";
 // data!
 import learningData from "../data/learningData";
 
-console.log(learningData);
+import { getProgress } from "../utils/progressUtils";
+const progressData = getProgress(learningData);
+
+console.log(progressData);
+// console.log(learningData);
 
 function Dashboard() {
   return (
@@ -19,7 +23,7 @@ function Dashboard() {
         <section className="progress-grid">
           <ProgressCard
             title="Overall Progress"
-            value="42%"
+            value={`${progressData.progress}%`}
             description="Keep improving"
           />
 
@@ -31,8 +35,8 @@ function Dashboard() {
 
           <ProgressCard
             title="Completed Concepts"
-            value="38"
-            description="Out of 90 concepts"
+            value={progressData.completed}
+            description={`Out of ${progressData.total} concepts`}
           />
         </section>
 
