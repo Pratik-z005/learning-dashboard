@@ -3,6 +3,11 @@ import Header from "../components/Header";
 import ProgressCard from "../components/ProgressCard";
 import TodayLearning from "../components/TodayLearning";
 
+// data!
+import learningData from "../data/learningData";
+
+console.log(learningData);
+
 function Dashboard() {
   return (
     <div className="app-layout">
