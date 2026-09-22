@@ -2,6 +2,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import ProgressCard from "../components/ProgressCard";
 import TodayLearning from "../components/TodayLearning";
+import ConceptTracker from "../components/ConceptTracker";
 
 // data!
 import learningData from "../data/learningData";
@@ -41,6 +42,8 @@ function Dashboard() {
         </section>
 
         <TodayLearning />
+
+        <ConceptTracker subject={learningData[2]} />
       </main>
     </div>
   );
