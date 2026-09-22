@@ -130,7 +130,7 @@ const learningData = [
           {
             id: 3007,
             name: "Fixed Window",
-            status: "mastered",
+            status: "needs revise",
           },
           {
             id: 3008,

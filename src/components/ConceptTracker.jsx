@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ConceptTracker({ subject }) {
-  const [completedConcepts, setCompletedConcepts] = useState([]);
+  const [completedConcepts, setCompletedConcepts] = useState(() => {
+    const savedConcepts = localStorage.getItem("completedConcepts");
+
+    return savedConcepts ? JSON.parse(savedConcepts) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "completedConcepts",
+      JSON.stringify(completedConcepts),
+    );
+  }, [completedConcepts]);
 
   function toggleConcept(conceptId) {
     setCompletedConcepts((previous) => {

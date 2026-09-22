@@ -30,7 +30,7 @@ function Dashboard() {
 
           <ProgressCard
             title="Learning Streak"
-            value="7 Days"
+            value="13 Days"
             description=" Great consistency"
           />
 
