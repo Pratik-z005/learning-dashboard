@@ -1,29 +1,4 @@
-import { useEffect, useState } from "react";
-
-function ConceptTracker({ subject }) {
-  const [completedConcepts, setCompletedConcepts] = useState(() => {
-    const savedConcepts = localStorage.getItem("completedConcepts");
-
-    return savedConcepts ? JSON.parse(savedConcepts) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem(
-      "completedConcepts",
-      JSON.stringify(completedConcepts),
-    );
-  }, [completedConcepts]);
-
-  function toggleConcept(conceptId) {
-    setCompletedConcepts((previous) => {
-      if (previous.includes(conceptId)) {
-        return previous.filter((id) => id !== conceptId);
-      }
-
-      return [...previous, conceptId];
-    });
-  }
-
+function ConceptTracker({ subject, completedConcepts, onToggle }) {
   return (
     <section className="concept-tracker">
       <div className="section-heading">
@@ -41,7 +16,7 @@ function ConceptTracker({ subject }) {
               <div
                 className={`concept ${isCompleted ? "completed" : ""}`}
                 key={concept.id}
-                onClick={() => toggleConcept(concept.id)}
+                onClick={() => onToggle(concept.id)}
               >
                 <span>
                   {isCompleted ? "✓" : "○"} {concept.name}

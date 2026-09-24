@@ -1,19 +1,40 @@
+import { useEffect, useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import ProgressCard from "../components/ProgressCard";
 import TodayLearning from "../components/TodayLearning";
 import ConceptTracker from "../components/ConceptTracker";
 
-// data!
 import learningData from "../data/learningData";
-
 import { getProgress } from "../utils/progressUtils";
-const progressData = getProgress(learningData);
-
-console.log(progressData);
-// console.log(learningData);
 
 function Dashboard() {
+  const [completedConcepts, setCompletedConcepts] = useState(() => {
+    const savedConcepts = localStorage.getItem("completedConcepts");
+
+    return savedConcepts ? JSON.parse(savedConcepts) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "completedConcepts",
+      JSON.stringify(completedConcepts),
+    );
+  }, [completedConcepts]);
+
+  function toggleConcept(conceptId) {
+    setCompletedConcepts((previous) => {
+      if (previous.includes(conceptId)) {
+        return previous.filter((id) => id !== conceptId);
+      }
+
+      return [...previous, conceptId];
+    });
+  }
+
+  const progressData = getProgress(learningData, completedConcepts);
+
   return (
     <div className="app-layout">
       <Sidebar />
@@ -30,8 +51,8 @@ function Dashboard() {
 
           <ProgressCard
             title="Learning Streak"
-            value="13 Days"
-            description=" Great consistency"
+            value="7 Days"
+            description="🔥 Great consistency"
           />
 
           <ProgressCard
@@ -43,7 +64,11 @@ function Dashboard() {
 
         <TodayLearning />
 
-        <ConceptTracker subject={learningData[2]} />
+        <ConceptTracker
+          subject={learningData[2]}
+          completedConcepts={completedConcepts}
+          onToggle={toggleConcept}
+        />
       </main>
     </div>
   );

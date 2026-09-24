@@ -12,13 +12,13 @@ function getAllConcepts(learningData) {
   return concepts;
 }
 
-function getProgress(learningData) {
+function getProgress(learningData, completedConcepts) {
   const concepts = getAllConcepts(learningData);
 
   const total = concepts.length;
 
-  const completed = concepts.filter(
-    (concept) => concept.status === "mastered",
+  const completed = concepts.filter((concept) =>
+    completedConcepts.includes(concept.id),
   ).length;
 
   const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
