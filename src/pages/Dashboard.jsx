@@ -16,6 +16,12 @@ import { getProgress, getNeedsWork } from "../utils/progressUtils";
 function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState(learningData[0]);
 
+  const [conceptStatuses, setConceptStatuses] = useState(() => {
+    const savedStatuses = localStorage.getItem("conceptStatuses");
+
+    return savedStatuses ? JSON.parse(savedStatuses) : {};
+  });
+
   const [completedConcepts, setCompletedConcepts] = useState(() => {
     const savedConcepts = localStorage.getItem("completedConcepts");
 
@@ -29,6 +35,10 @@ function Dashboard() {
     );
   }, [completedConcepts]);
 
+  useEffect(() => {
+    localStorage.setItem("conceptStatuses", JSON.stringify(conceptStatuses));
+  }, [conceptStatuses]);
+
   function toggleConcept(conceptId) {
     setCompletedConcepts((previous) => {
       if (previous.includes(conceptId)) {
@@ -37,6 +47,13 @@ function Dashboard() {
 
       return [...previous, conceptId];
     });
+  }
+
+  function updateConceptStatus(conceptId, status) {
+    setConceptStatuses((previous) => ({
+      ...previous,
+      [conceptId]: status,
+    }));
   }
 
   const progressData = getProgress(learningData, completedConcepts);
@@ -82,6 +99,8 @@ function Dashboard() {
           subject={selectedSubject}
           completedConcepts={completedConcepts}
           onToggle={toggleConcept}
+          conceptStatuses={conceptStatuses}
+          onStatusChange={updateConceptStatus}
         />
 
         <NeedsWork concepts={needsWork} />

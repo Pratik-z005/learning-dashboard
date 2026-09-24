@@ -277,3 +277,68 @@ body {
   background: #111827;
   color: white;
 }
+
+.subject-description {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.topic-header span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.concept-list {
+  margin-top: 10px;
+}
+
+.concept-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.concept-icon {
+  font-size: 18px;
+  min-width: 20px;
+}
+
+.concept-info h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.concept-info p {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.concept-actions {
+  display: flex;
+  align-items: center;
+}
+
+.concept-actions select {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.concept-actions select:focus {
+  outline: none;
+  border-color: #111827;
+}
