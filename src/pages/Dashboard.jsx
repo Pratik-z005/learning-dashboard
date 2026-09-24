@@ -5,11 +5,17 @@ import Header from "../components/Header";
 import ProgressCard from "../components/ProgressCard";
 import TodayLearning from "../components/TodayLearning";
 import ConceptTracker from "../components/ConceptTracker";
+import NeedsWork from "../components/NeedsWork";
+
+import SubjectSelector from "../components/SubjectSelector";
 
 import learningData from "../data/learningData";
-import { getProgress } from "../utils/progressUtils";
+
+import { getProgress, getNeedsWork } from "../utils/progressUtils";
 
 function Dashboard() {
+  const [selectedSubject, setSelectedSubject] = useState(learningData[0]);
+
   const [completedConcepts, setCompletedConcepts] = useState(() => {
     const savedConcepts = localStorage.getItem("completedConcepts");
 
@@ -35,12 +41,20 @@ function Dashboard() {
 
   const progressData = getProgress(learningData, completedConcepts);
 
+  const needsWork = getNeedsWork(learningData);
+
   return (
     <div className="app-layout">
       <Sidebar />
 
       <main className="main-content">
         <Header />
+
+        <SubjectSelector
+          subjects={learningData}
+          selectedSubject={selectedSubject}
+          onSelect={setSelectedSubject}
+        />
 
         <section className="progress-grid">
           <ProgressCard
@@ -65,10 +79,12 @@ function Dashboard() {
         <TodayLearning />
 
         <ConceptTracker
-          subject={learningData[2]}
+          subject={selectedSubject}
           completedConcepts={completedConcepts}
           onToggle={toggleConcept}
         />
+
+        <NeedsWork concepts={needsWork} />
       </main>
     </div>
   );

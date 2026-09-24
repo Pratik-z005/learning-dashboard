@@ -30,4 +30,28 @@ function getProgress(learningData, completedConcepts) {
   };
 }
 
-export { getAllConcepts, getProgress };
+function getNeedsWork(learningData) {
+  const needsWork = [];
+
+  learningData.forEach((subject) => {
+    subject.topics.forEach((topic) => {
+      topic.concepts.forEach((concept) => {
+        if (
+          concept.status === "needs-practice" ||
+          concept.status === "needs-revision" ||
+          concept.status === "learning"
+        ) {
+          needsWork.push({
+            ...concept,
+            subject: subject.name,
+            topic: topic.name,
+          });
+        }
+      });
+    });
+  });
+
+  return needsWork;
+}
+
+export { getAllConcepts, getProgress, getNeedsWork };
