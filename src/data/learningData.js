@@ -225,4 +225,26 @@ const learningData = [
   },
 ];
 
-export default learningData;
+const todayLearning = {
+  day: 12,
+  date: "2026-09-24",
+  concepts: [
+    {
+      id: 3009,
+      name: "HashMap Basics",
+      completed: true,
+    },
+    {
+      id: 3011,
+      name: "getOrDefault()",
+      completed: false,
+    },
+    {
+      id: 4002,
+      name: "GET Request",
+      completed: false,
+    },
+  ],
+};
+
+export { learningData, todayLearning };

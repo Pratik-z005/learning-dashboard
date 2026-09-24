@@ -30,6 +30,30 @@ function getProgress(learningData, completedConcepts) {
   };
 }
 
+function getSubjectProgress(subject, completedConcepts) {
+  const concepts = [];
+
+  subject.topics.forEach((topic) => {
+    topic.concepts.forEach((concept) => {
+      concepts.push(concept);
+    });
+  });
+
+  const total = concepts.length;
+
+  const completed = concepts.filter((concept) =>
+    completedConcepts.includes(concept.id),
+  ).length;
+
+  const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  return {
+    total,
+    completed,
+    progress,
+  };
+}
+
 function getNeedsWork(learningData) {
   const needsWork = [];
 
@@ -54,4 +78,4 @@ function getNeedsWork(learningData) {
   return needsWork;
 }
 
-export { getAllConcepts, getProgress, getNeedsWork };
+export { getAllConcepts, getProgress, getNeedsWork, getSubjectProgress };

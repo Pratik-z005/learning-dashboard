@@ -1,30 +1,25 @@
-function TodayLearning() {
+function TodayLearning({ learning }) {
   return (
     <section className="today-learning">
       <div className="section-heading">
-        <h2>Today's Learning</h2>
-        <span>Day 12</span>
+        <div>
+          <h2>Today's Learning</h2>
+          <p>Keep moving forward with today's concepts.</p>
+        </div>
+
+        <span>Day {learning.day}</span>
       </div>
 
-      <div className="learning-item completed">
-        <span>✓</span>
-        <p>JavaScript Fundamentals</p>
-      </div>
+      {learning.concepts.map((concept) => (
+        <div
+          className={`learning-item ${concept.completed ? "completed" : ""}`}
+          key={concept.id}
+        >
+          <span>{concept.completed ? "✓" : "○"}</span>
 
-      <div className="learning-item completed">
-        <span>✓</span>
-        <p>React Components</p>
-      </div>
-
-      <div className="learning-item">
-        <span>○</span>
-        <p>HashMap Practice</p>
-      </div>
-
-      <div className="learning-item">
-        <span>○</span>
-        <p>REST API — GET Request</p>
-      </div>
+          <p>{concept.name}</p>
+        </div>
+      ))}
     </section>
   );
 }

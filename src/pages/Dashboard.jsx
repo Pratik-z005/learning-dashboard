@@ -6,12 +6,17 @@ import ProgressCard from "../components/ProgressCard";
 import TodayLearning from "../components/TodayLearning";
 import ConceptTracker from "../components/ConceptTracker";
 import NeedsWork from "../components/NeedsWork";
+import ProgressBar from "../components/ProgressBar";
 
 import SubjectSelector from "../components/SubjectSelector";
 
-import learningData from "../data/learningData";
+import { learningData, todayLearning } from "../data/learningData";
 
-import { getProgress, getNeedsWork } from "../utils/progressUtils";
+import {
+  getProgress,
+  getNeedsWork,
+  getSubjectProgress,
+} from "../utils/progressUtils";
 
 function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState(learningData[0]);
@@ -60,6 +65,11 @@ function Dashboard() {
 
   const needsWork = getNeedsWork(learningData);
 
+  const subjectProgress = getSubjectProgress(
+    selectedSubject,
+    completedConcepts,
+  );
+
   return (
     <div className="app-layout">
       <Sidebar />
@@ -93,7 +103,24 @@ function Dashboard() {
           />
         </section>
 
-        <TodayLearning />
+        <TodayLearning learning={todayLearning} />
+
+        <section className="subject-progress">
+          <div className="section-heading">
+            <div>
+              <h2>{selectedSubject.name} Progress</h2>
+
+              <p>
+                {subjectProgress.completed} of {subjectProgress.total} concepts
+                completed
+              </p>
+            </div>
+
+            <strong>{subjectProgress.progress}%</strong>
+          </div>
+
+          <ProgressBar value={subjectProgress.progress} />
+        </section>
 
         <ConceptTracker
           subject={selectedSubject}
