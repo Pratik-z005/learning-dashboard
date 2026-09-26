@@ -18,6 +18,8 @@ import {
   getSubjectProgress,
 } from "../utils/progressUtils";
 
+import { getStreak } from "../utils/streakUtils";
+
 function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState(learningData[0]);
 
@@ -33,6 +35,12 @@ function Dashboard() {
     return savedConcepts ? JSON.parse(savedConcepts) : [];
   });
 
+  const [activityDates, setActivityDates] = useState(() => {
+    const savedDates = localStorage.getItem("activityDates");
+
+    return savedDates ? JSON.parse(savedDates) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem(
       "completedConcepts",
@@ -44,6 +52,10 @@ function Dashboard() {
     localStorage.setItem("conceptStatuses", JSON.stringify(conceptStatuses));
   }, [conceptStatuses]);
 
+  useEffect(() => {
+    localStorage.setItem("activityDates", JSON.stringify(activityDates));
+  }, [activityDates]);
+
   function toggleConcept(conceptId) {
     setCompletedConcepts((previous) => {
       if (previous.includes(conceptId)) {
@@ -51,6 +63,16 @@ function Dashboard() {
       }
 
       return [...previous, conceptId];
+    });
+
+    const today = new Date().toISOString().split("T")[0];
+
+    setActivityDates((previous) => {
+      if (previous.includes(today)) {
+        return previous;
+      }
+
+      return [...previous, today];
     });
   }
 
@@ -69,6 +91,8 @@ function Dashboard() {
     selectedSubject,
     completedConcepts,
   );
+
+  const streak = getStreak(activityDates);
 
   return (
     <div className="app-layout">
@@ -92,8 +116,8 @@ function Dashboard() {
 
           <ProgressCard
             title="Learning Streak"
-            value="7 Days"
-            description="🔥 Great consistency"
+            value={`${streak} Days`}
+            description={streak > 0 ? "Keep going" : "Start learning today"}
           />
 
           <ProgressCard
